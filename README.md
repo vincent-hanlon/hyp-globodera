@@ -1,8 +1,7 @@
 This repository contains scripts relating to the article
 
-**Diversity at the HYP1 locus in potato cyst nematodes does not result from developmentally-programmed somatic mutations**
-
-by Vincent C. T. Hanlon, Unnati Sonawala, Cian A. A. Raza, Luisa Kalkert, George Harpum, Lukas A. Burkhardt, Johannes Helder, and Sebastian Eves-van den Akker
+ > **Diversity at the HYP1 locus in potato cyst nematodes does not result from developmentally-programmed somatic mutations** \
+ > Vincent C. T. Hanlon, Unnati Sonawala, Cian A. A. Raza, Luisa Kalkert, George Harpum, Lukas A. Burkhardt, Johannes Helder, and Sebastian Eves-van den Akker
 
 ### HYP1 allele parsing analysis
 
@@ -18,6 +17,14 @@ Subsequently, the output file can be processed to identify putative rare alleles
 
 ### Alignment plots for manual examination of FASTQ reads
 
+The jupyter notebook [manual_examination_alignment_plot_creation.ipynb](manual_examination_alignment_plot_creation.ipynb) creates a multi-page pdf with alignment plots for manual examination. The concept is that we have a short list of known/expected/germline/validated allele sequences for a locus in a FASTA file, and a larger FASTQ file of error-prone reads for the same locus. All inputs must be oriented the same way and trimmed so that they cover roughly the same part of the locus. Then, by aligning a FASTQ read against all the known alleles from the FASTA file, we can determine which allele the read most likely represents. Usually, any mismatches and gaps in the alignment will represent sequencing errors, so we will see them when we colour the plots by base quality. However, for some reads bearing rare or mutant alleles, the mismatches and gaps relative to the best-aligning known allele will be embedded in good base qualities (and will typically be longer, not linked to homopolymers, etc), indicating that we are finding real biological variation. 
+
+Input FASTA files and an example fastq file can be found in the directory [manual_examination_inputs](manual_examination_inputs).
+
+The plotting routine is run like this:
+
+`generate_alignment_report('pallida.top6_alleles.fasta', 'pallida.example_alleles.fastq', 'output.pdf')`
+
 ### Nucleotide diversity calculation
 
-This simple script calculates the nucleotide diversity across genomic regions (BED file) from biallelic or multiallelic SNVs in an all-sites VCF (should include invariant sites). The VCF must contain a single sample originating from a pool of individuals, under the assumption that there are many more individuals than reads. This way, every read is likely to represent a distinct individual. The script uses the allele depth field as a proxy for allele frequencies.
+This [simple script](nucleotide_diversity_pi_from_pooled_vcf.py) calculates the nucleotide diversity across genomic regions (BED file) from biallelic or multiallelic SNVs in an all-sites VCF (should include invariant sites). The VCF must contain a single sample originating from a pool of individuals, under the assumption that there are many more individuals than reads. This way, every read is likely to represent a distinct individual. The script uses the allele depth field as a proxy for allele frequencies.
