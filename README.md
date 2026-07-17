@@ -11,7 +11,7 @@ It is run like this:
 
 `python parse_hyp_motifs.py fastq_file conserved_primers_fasta motif_table`
 
-Examples of motif tables and the conserved primer sequences can be found in the directory [parsing_inputs/](parsing_inputs)
+Examples of motif tables and the conserved primer sequences can be found in the directory [parsing_inputs/](parsing_inputs). Input FASTQ files can be found on the NCBI Sequence Read Archive (see article above). 
 
 Subsequently, the output file can be processed to identify putative rare alleles in several ways. We used the routine found in the script [parsed_post_processing.sh](parsed_post_processing.sh).
 
@@ -25,6 +25,8 @@ The plotting routine is run like this:
 
 `generate_alignment_report('pallida.top6_alleles.fasta', 'pallida.example_alleles.fastq', 'output.pdf')`
 
+Input FASTQ files should be created from the output file from [parse_hyp_motifs.py](parse_hyp_motifs.py) using data from the NCBI Sequence Read Archive (see article above).
+
 ### Nucleotide diversity calculation
 
-This [simple script](nucleotide_diversity_pi_from_pooled_vcf.py) calculates the nucleotide diversity across genomic regions (BED file) from biallelic or multiallelic SNVs in an all-sites VCF (should include invariant sites). The VCF must contain a single sample originating from a pool of individuals, under the assumption that there are many more individuals than reads. This way, every read is likely to represent a distinct individual. The script uses the allele depth field as a proxy for allele frequencies.
+This [simple script](nucleotide_diversity_pi_from_pooled_vcf.py) calculates the nucleotide diversity across genomic regions (BED file) from biallelic or multiallelic SNVs in an all-sites VCF (should include invariant sites). The VCF must contain a single sample originating from a pool of individuals, under the assumption that there are many more individuals than reads. This way, every read is likely to represent a distinct individual. The script uses the allele depth field as a proxy for allele frequencies. The VCF files we used are available from Dryad and should first be filtered/processed as described (see article above).
